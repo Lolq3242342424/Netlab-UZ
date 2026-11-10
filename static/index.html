@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NetLab UZ</title>
+  <link rel="icon" href="data:,">
+  <script src="/theme-boot.js"></script>
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/cyber.css">
+  <script src="/theme.js" defer></script>
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo" aria-hidden="true">NL</span>
+      <div>
+        <h1 data-i18n="app.title">NetLab UZ</h1>
+        <p class="tagline" data-i18n="app.tagline"></p>
+      </div>
+    </div>
+    <label class="lang">
+      <span data-i18n="lang.label"></span>
+      <select id="lang-select">
+        <option value="ru">Русский</option>
+        <option value="uz">O'zbekcha</option>
+      </select>
+    </label>
+    <div id="theme-mount"></div>
+  </header>
+  <p class="sim-note" data-i18n="app.sim_note"></p>
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+
+  <main class="layout">
+    <section class="panel side" aria-labelledby="tools-h">
+      <h2 id="tools-h" data-i18n="tools.title"></h2>
+      <div class="btn-col">
+        <button id="tool-select" class="btn tool active" data-i18n="tools.select"></button>
+        <button id="tool-connect" class="btn tool" data-i18n="tools.connect"></button>
+        <button id="add-pc" class="btn" data-i18n="tools.add_pc"></button>
+        <button id="add-switch" class="btn" data-i18n="tools.add_switch"></button>
+        <button id="delete-sel" class="btn danger" data-i18n="tools.delete"></button>
+        <button id="new-sandbox" class="btn" data-i18n="tools.new_sandbox"></button>
+      </div>
+      <p id="tool-hint" class="hint"></p>
+
+      <h2 data-i18n="props.title"></h2>
+      <div id="props"></div>
+    </section>
+
+    <section class="canvas-wrap" aria-label="Sandbox">
+      <svg id="canvas" viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid meet" role="img"></svg>
+    </section>
+
+    <section class="panel side">
+      <h2 data-i18n="ping.title"></h2>
+      <div class="row">
+        <label><span data-i18n="ping.from"></span><select id="ping-src"></select></label>
+        <label><span data-i18n="ping.to"></span><select id="ping-dst"></select></label>
+      </div>
+      <button id="ping-run" class="btn primary" data-i18n="ping.run"></button>
+      <div id="ping-result" class="result" aria-live="polite"></div>
+
+      <h2 data-i18n="tasks.title"></h2>
+      <div class="row">
+        <select id="task-select" aria-label="tasks"></select>
+        <button id="task-load" class="btn" data-i18n="tasks.load"></button>
+      </div>
+      <div id="task-info" class="hint"></div>
+      <button id="task-check" class="btn primary" data-i18n="tasks.check"></button>
+      <div id="task-result" class="result" aria-live="polite"></div>
+
+      <h2 data-i18n="projects.title"></h2>
+      <input id="project-name" type="text" maxlength="60"
+             data-i18n-placeholder="projects.name_ph" aria-label="name">
+      <div class="row">
+        <button id="project-save" class="btn primary" data-i18n="projects.save"></button>
+        <button id="project-save-new" class="btn" data-i18n="projects.save_new"></button>
+      </div>
+      <p id="project-current" class="hint"></p>
+      <ul id="project-list" class="plist"></ul>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <a href="/author.html" data-i18n="footer.author"></a>
+  </footer>
+</body>
+</html>

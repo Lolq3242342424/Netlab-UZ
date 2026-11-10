@@ -1,0 +1,336 @@
+/* NetLab UZ — Stage C: Cyberpunk design layer.
+   Загружается после /style.css. Переопределяет переменные через [data-theme="..."]. */
+
+/* ===== Cyberpunk ===== */
+[data-theme="cyberpunk"] {
+  --bg:#06080f; --bg-2:#0a0e18; --panel:#111726; --panel-2:#171f33;
+  --line:#26314a; --line-hi:#3a4d75;
+  --text:#e6edff; --muted:#8a99b8;
+  --accent:#00d4ff; --accent-2:#a855f7; --accent-ink:#06080f;
+  --ok:#22d97a; --ok-bg:rgba(34,217,122,.10);
+  --bad:#ff5c7c; --bad-bg:rgba(255,92,124,.10);
+  --canvas:#080c16; --grid:#16203a;
+  --pc:#1e2f52; --sw:#2a1a4f; --sel:#00d4ff;
+  --glow:rgba(0,212,255,.45);
+}
+
+/* ===== Ocean ===== */
+[data-theme="ocean"] {
+  --bg:#04121b; --bg-2:#061a27; --panel:#0a2233; --panel-2:#0f2c42;
+  --line:#1b3d56; --line-hi:#2a5d7f;
+  --text:#e3f0f7; --muted:#7fa3b8;
+  --accent:#22d3ee; --accent-2:#14b8a6; --accent-ink:#04121b;
+  --ok:#22c55e; --ok-bg:rgba(34,197,94,.10);
+  --bad:#ef4444; --bad-bg:rgba(239,68,68,.10);
+  --canvas:#051520; --grid:#12293a;
+  --pc:#0f2f47; --sw:#123a42; --sel:#22d3ee;
+  --glow:rgba(34,211,238,.40);
+}
+
+/* ===== Purple Haze ===== */
+[data-theme="purple"] {
+  --bg:#0a0616; --bg-2:#100a1e; --panel:#1a1128; --panel-2:#221636;
+  --line:#362548; --line-hi:#4f3870;
+  --text:#ede7f6; --muted:#a793c2;
+  --accent:#c084fc; --accent-2:#ec4899; --accent-ink:#0a0616;
+  --ok:#4ade80; --ok-bg:rgba(74,222,128,.10);
+  --bad:#f43f5e; --bad-bg:rgba(244,63,94,.10);
+  --canvas:#0d081b; --grid:#221532;
+  --pc:#241a3d; --sw:#34152a; --sel:#c084fc;
+  --glow:rgba(192,132,252,.45);
+}
+
+/* ===== Emerald ===== */
+[data-theme="emerald"] {
+  --bg:#04140c; --bg-2:#061e11; --panel:#0a2416; --panel-2:#0f301e;
+  --line:#1a4228; --line-hi:#2a6440;
+  --text:#e3f5eb; --muted:#7fa995;
+  --accent:#22c55e; --accent-2:#10b981; --accent-ink:#04140c;
+  --ok:#22d97a; --ok-bg:rgba(34,217,122,.10);
+  --bad:#f43f5e; --bad-bg:rgba(244,63,94,.10);
+  --canvas:#051810; --grid:#0f2a1a;
+  --pc:#0f2a1a; --sw:#123a1f; --sel:#22c55e;
+  --glow:rgba(34,197,94,.45);
+}
+
+/* ===== Crimson ===== */
+[data-theme="crimson"] {
+  --bg:#120608; --bg-2:#1a0a0d; --panel:#221015; --panel-2:#2e161d;
+  --line:#3f2029; --line-hi:#5c2f3d;
+  --text:#f7e6e9; --muted:#b8868f;
+  --accent:#ef4444; --accent-2:#ec4899; --accent-ink:#120608;
+  --ok:#22c55e; --ok-bg:rgba(34,197,94,.10);
+  --bad:#ff5c5c; --bad-bg:rgba(255,92,92,.10);
+  --canvas:#16080b; --grid:#2a1219;
+  --pc:#2a1015; --sw:#33101e; --sel:#ef4444;
+  --glow:rgba(239,68,68,.45);
+}
+
+/* ===== Light ===== */
+[data-theme="light"] {
+  --bg:#f4f6fb; --bg-2:#eef2f9; --panel:#ffffff; --panel-2:#f6f8fc;
+  --line:#d4dae6; --line-hi:#b8c1d1;
+  --text:#0f172a; --muted:#5b6879;
+  --accent:#2563eb; --accent-2:#7c3aed; --accent-ink:#ffffff;
+  --ok:#16a34a; --ok-bg:rgba(22,163,74,.10);
+  --bad:#dc2626; --bad-bg:rgba(220,38,38,.10);
+  --canvas:#ffffff; --grid:#e5eaf3;
+  --pc:#dbeafe; --sw:#ede9fe; --sel:#2563eb;
+  --glow:transparent;
+}
+
+/* ===== Базовые компоненты (переопределение style.css через переменные) ===== */
+html, body { background: var(--bg); color: var(--text); }
+
+.topbar {
+  display: flex; align-items: center; gap: 0.75rem;
+  background: var(--panel); border-bottom: 1px solid var(--line);
+  color: var(--text);
+}
+.topbar > .brand { margin-right: auto; }
+.logo {
+  background: var(--accent); color: var(--accent-ink);
+  box-shadow: 0 0 12px var(--glow);
+}
+.tagline, .hint { color: var(--muted); }
+.sim-note {
+  background: var(--ok-bg); color: var(--ok);
+  border-bottom: 1px solid var(--line);
+}
+
+.panel {
+  background: var(--panel); border: 1px solid var(--line);
+  color: var(--text);
+  box-shadow: 0 2px 8px rgba(0,0,0,.15);
+}
+
+input, select {
+  background: var(--bg); color: var(--text); border: 1px solid var(--line);
+}
+input:focus-visible, select:focus-visible {
+  outline: 2px solid var(--accent); outline-offset: 1px;
+  border-color: var(--accent);
+}
+
+.btn {
+  background: var(--panel); color: var(--text); border: 1px solid var(--line);
+  transition: border-color .15s, background-color .15s;
+}
+.btn:hover { border-color: var(--line-hi); }
+.btn:focus-visible {
+  outline: 2px solid var(--accent); outline-offset: 2px;
+}
+.btn.primary {
+  background: var(--accent); color: var(--accent-ink);
+  border-color: var(--accent);
+  box-shadow: 0 0 8px var(--glow);
+}
+.btn.primary:hover { border-color: var(--accent-2); }
+.btn.active {
+  border-color: var(--accent);
+  box-shadow: inset 0 0 0 1px var(--accent);
+}
+.btn.danger { color: var(--bad); border-color: var(--line); }
+.btn.danger:hover { border-color: var(--bad); }
+
+.plist li {
+  background: var(--panel-2); border: 1px solid var(--line);
+  color: var(--text);
+}
+.plist .pname { color: var(--text); }
+
+.res-head.ok { background: var(--ok-bg); color: var(--ok); }
+.res-head.bad { background: var(--bad-bg); color: var(--bad); }
+.steps li { color: var(--text); }
+.steps li::before { color: var(--ok); }
+.steps li.bad::before { color: var(--bad); }
+
+.toast { background: var(--text); color: var(--bg); }
+.toast.err { background: var(--bad); color: #ffffff; }
+
+/* ===== SVG-схема ===== */
+#canvas { background: var(--canvas); }
+.grid-line { stroke: var(--grid); }
+
+.dev rect.body {
+  fill: var(--pc);
+  stroke: var(--line);
+  stroke-width: 2;
+  transition: stroke .15s, filter .15s;
+}
+.dev.switch rect.body { fill: var(--sw); }
+.dev.selected rect.body,
+.dev.pending rect.body {
+  stroke: var(--sel);
+  stroke-width: 3;
+  filter: drop-shadow(0 0 4px var(--glow));
+}
+.dev text { fill: var(--text); pointer-events: none; }
+.dev .nm { font-weight: 600; }
+.dev .ipt { fill: var(--muted); }
+.dev:hover rect.body { stroke: var(--line-hi); }
+
+.link-line {
+  stroke: var(--muted);
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+.link.selected .link-line {
+  stroke: var(--sel);
+  stroke-width: 4;
+  filter: drop-shadow(0 0 3px var(--glow));
+}
+.link-hit { stroke: transparent; stroke-width: 22; cursor: pointer; }
+.port-t { fill: var(--muted); }
+
+/* ===== Theme picker ===== */
+#theme-mount { position: relative; display: inline-block; }
+
+#theme-toggle {
+  width: 2.4rem; height: 2.4rem;
+  padding: 0; font-size: 1.2rem; line-height: 1;
+  text-align: center;
+  background: var(--panel-2); color: var(--text);
+  border: 1px solid var(--line); border-radius: 8px;
+  cursor: pointer;
+  transition: border-color .15s, box-shadow .15s;
+}
+#theme-toggle:hover { border-color: var(--accent); }
+#theme-toggle[aria-expanded="true"] {
+  border-color: var(--accent);
+  box-shadow: inset 0 0 0 1px var(--accent);
+}
+#theme-toggle:focus-visible {
+  outline: 2px solid var(--accent); outline-offset: 2px;
+}
+
+#theme-picker {
+  position: absolute; top: calc(100% + 0.5rem); right: 0;
+  z-index: 50;
+  background: var(--panel); color: var(--text);
+  border: 1px solid var(--line); border-radius: 12px;
+  padding: 0.9rem;
+  min-width: 280px;
+  box-shadow: 0 8px 32px rgba(0,0,0,.4);
+}
+
+.theme-title {
+  margin: 0 0 0.6rem;
+  font-size: 0.95rem; font-weight: 600;
+  color: var(--text);
+}
+
+.theme-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+  margin-bottom: 0.7rem;
+}
+
+.theme-card {
+  display: flex; flex-direction: column; align-items: flex-start;
+  gap: 0.3rem;
+  padding: 0.5rem 0.6rem;
+  background: var(--panel-2); color: var(--text);
+  border: 1px solid var(--line); border-radius: 8px;
+  cursor: pointer;
+  font: inherit; font-size: 0.82rem; text-align: left;
+  transition: border-color .15s, box-shadow .15s;
+}
+.theme-card:hover { border-color: var(--line-hi); }
+.theme-card[aria-pressed="true"] {
+  border-color: var(--accent);
+  box-shadow: inset 0 0 0 1px var(--accent);
+}
+.theme-card:focus-visible {
+  outline: 2px solid var(--accent); outline-offset: 1px;
+}
+
+.theme-swatches {
+  display: flex; gap: 2px;
+  width: 100%; height: 10px;
+}
+.theme-swatches > span {
+  flex: 1;
+  border-radius: 2px;
+  border: 1px solid rgba(0,0,0,.15);
+}
+.theme-label { font-weight: 500; }
+
+/* Swatch-цвета каждой темы — фиксированные, не через CSS vars,
+   потому что показывают образец темы независимо от текущего data-theme. */
+.theme-card[data-theme="cyberpunk"] .sw-bg      { background:#06080f; }
+.theme-card[data-theme="cyberpunk"] .sw-accent  { background:#00d4ff; }
+.theme-card[data-theme="cyberpunk"] .sw-accent2 { background:#a855f7; }
+
+.theme-card[data-theme="ocean"]     .sw-bg      { background:#04121b; }
+.theme-card[data-theme="ocean"]     .sw-accent  { background:#22d3ee; }
+.theme-card[data-theme="ocean"]     .sw-accent2 { background:#14b8a6; }
+
+.theme-card[data-theme="purple"]    .sw-bg      { background:#0a0616; }
+.theme-card[data-theme="purple"]    .sw-accent  { background:#c084fc; }
+.theme-card[data-theme="purple"]    .sw-accent2 { background:#ec4899; }
+
+.theme-card[data-theme="emerald"]   .sw-bg      { background:#04140c; }
+.theme-card[data-theme="emerald"]   .sw-accent  { background:#22c55e; }
+.theme-card[data-theme="emerald"]   .sw-accent2 { background:#10b981; }
+
+.theme-card[data-theme="crimson"]   .sw-bg      { background:#120608; }
+.theme-card[data-theme="crimson"]   .sw-accent  { background:#ef4444; }
+.theme-card[data-theme="crimson"]   .sw-accent2 { background:#ec4899; }
+
+.theme-card[data-theme="light"]     .sw-bg      { background:#f4f6fb; }
+.theme-card[data-theme="light"]     .sw-accent  { background:#2563eb; }
+.theme-card[data-theme="light"]     .sw-accent2 { background:#7c3aed; }
+
+#theme-reset {
+  width: 100%;
+  padding: 0.45rem 0.6rem;
+  font-size: 0.82rem; text-align: center;
+}
+#theme-storage-warn {
+  margin: 0.4rem 0 0;
+  font-size: 0.78rem;
+  color: var(--bad);
+}
+
+/* ===== Футер ===== */
+.footer {
+  padding: 1rem;
+  text-align: center;
+  border-top: 1px solid var(--line);
+  background: var(--bg-2);
+  font-size: 0.85rem;
+}
+.footer a { color: var(--muted); text-decoration: none; }
+.footer a:hover { color: var(--accent); text-decoration: underline; }
+.footer a:focus-visible {
+  outline: 2px solid var(--accent); outline-offset: 2px;
+}
+
+/* ===== Доступность ===== */
+/* ===== author.html layout (CSP-safe; no inline style) ===== */
+.author-page {
+  max-width: 720px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+}
+.author-page h1 { margin-top: 0; }
+.author-page a {
+  color: var(--accent);
+  text-decoration: none;
+}
+.author-page a:hover { text-decoration: underline; }
+.author-page a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* ===== Защита [hidden] — в самом конце ===== */
+[hidden] { display: none !important; }

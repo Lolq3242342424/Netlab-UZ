@@ -1,0 +1,172 @@
+{
+  "app": {
+    "title": "NetLab UZ",
+    "tagline": "Kompyuter tarmoqlari virtual laboratoriyasi",
+    "sim_note": "Bu o'quv simulyatsiyasi: haqiqiy tarmoq paketlari yuborilmaydi."
+  },
+  "lang": {
+    "label": "Til"
+  },
+  "tools": {
+    "title": "Asboblar",
+    "select": "Tanlash / siljitish",
+    "connect": "Kabel bilan ulash",
+    "add_pc": "+ Kompyuter",
+    "add_switch": "+ Kommutator",
+    "delete": "Tanlanganni o'chirish",
+    "connect_hint": "Avval birinchi qurilmani, keyin ikkinchisini bosing.",
+    "connect_first": "«{name}» tanlandi. Endi ikkinchi qurilmani bosing.",
+    "new_sandbox": "Yangi sxema"
+  },
+  "props": {
+    "title": "Xossalar",
+    "none": "Sxemadan qurilma yoki kabelni tanlang.",
+    "name": "Nomi",
+    "ip": "IP-manzil",
+    "mask": "Podtarmoq niqobi",
+    "ip_ph": "192.168.1.10",
+    "mask_ph": "255.255.255.0 yoki /24",
+    "switch_note": "Kommutator ikkinchi sathda ishlaydi va IP-manzilga ega emas.",
+    "link": "Kabel: {a} ({pa}) — {b} ({pb})"
+  },
+  "ping": {
+    "title": "Aloqani tekshirish (ping)",
+    "from": "Qayerdan",
+    "to": "Qayerga",
+    "run": "Ping bajarish",
+    "need_two": "Kamida ikkita kompyuter qo'shing.",
+    "steps": "Tekshiruv bosqichlari",
+    "path": "Kabellar yo'li",
+    "success": "Muvaffaqiyat",
+    "failure": "Muvaffaqiyatsiz"
+  },
+  "tasks": {
+    "title": "Topshiriqlar",
+    "load": "Topshiriqni ochish",
+    "check": "Yechimni tekshirish",
+    "current": "Joriy topshiriq",
+    "none": "Topshiriq tanlanmagan. Ro'yxatdan birini oching.",
+    "passed": "Topshiriq bajarildi!",
+    "not_passed": "Hozircha hammasi to'g'ri emas.",
+    "confirm_replace": "Joriy sxema almashtiriladi. Davom etasizmi?"
+  },
+  "projects": {
+    "title": "Loyihalar",
+    "name": "Loyiha nomi",
+    "name_ph": "Masalan: Mening birinchi tarmog'im",
+    "save": "Saqlash",
+    "save_new": "Yangi sifatida saqlash",
+    "load": "Ochish",
+    "delete": "O'chirish",
+    "empty": "Saqlangan loyihalar hali yo'q.",
+    "saved": "«{name}» loyihasi saqlandi.",
+    "loaded": "«{name}» loyihasi ochildi.",
+    "deleted": "Loyiha o'chirildi.",
+    "confirm_delete": "«{name}» loyihasi butunlay o'chirilsinmi?",
+    "current": "Ochiq loyiha: {name}"
+  },
+  "steps": {
+    "source_config": "Jo'natuvchi sozlamalari",
+    "target_config": "Qabul qiluvchi sozlamalari",
+    "ip_unique": "Manzillar takrorlanmaydi",
+    "same_subnet": "Qabul qiluvchi bir xil podtarmoqda",
+    "link_path": "Kabellar qurilmalarni bog'laydi",
+    "reply": "Javob jo'natuvchiga qaytadi"
+  },
+  "checks": {
+    "devices_present": "Sxemada PC1, PC2 va SW1 qolgan",
+    "cables_to_switch": "Ikkala kompyuter kommutatorga ulangan. Ulanmaganlar: {devices}",
+    "ips_kept": "Manzillarni o'zgartirish mumkin emas, yechim boshqa joyda. O'zgartirilgan: {devices}",
+    "unique_ips": "Kompyuterlarning IP-manzillari turlicha",
+    "ping_forward": "ping PC1 → PC2",
+    "ping_backward": "ping PC2 → PC1"
+  },
+  "ping_codes": {
+    "OK": "Muvaffaqiyat! {source} {target} ga yetib bordi. Yo'l: {path}.",
+    "SOURCE_NOT_FOUND": "Jo'natuvchi sxemada topilmadi.",
+    "TARGET_NOT_FOUND": "Qabul qiluvchi sxemada topilmadi.",
+    "NOT_A_HOST": "Ping faqat kompyuterlar o'rtasida bajariladi.",
+    "SAME_DEVICE": "Ikki xil kompyuter tanlang: {device} o'ziga ping qila olmaydi.",
+    "SRC_NO_IP": "{device} uchun IP-manzil berilmagan. Uni qurilma xossalarida kiriting.",
+    "SRC_BAD_IP": "{device} ning IP-manzili «{ip}» noto'g'ri. Nuqta bilan ajratilgan 0 dan 255 gacha 4 ta son kerak.",
+    "SRC_NO_MASK": "{device} uchun podtarmoq niqobi berilmagan. Masalan, 255.255.255.0.",
+    "SRC_BAD_MASK": "{device} ning niqobi «{mask}» noto'g'ri. Niqobda avval birlar, keyin nollar ketma-ket keladi.",
+    "SRC_ADDR_IS_NETWORK": "{device} dagi {ip} manzil tarmoq manzili, uni kompyuterga berib bo'lmaydi.",
+    "SRC_ADDR_IS_BROADCAST": "{device} dagi {ip} manzil keng ko'lamli (broadcast), uni kompyuterga berib bo'lmaydi.",
+    "DST_NO_IP": "{device} uchun IP-manzil berilmagan. Uni qurilma xossalarida kiriting.",
+    "DST_BAD_IP": "{device} ning IP-manzili «{ip}» noto'g'ri. Nuqta bilan ajratilgan 0 dan 255 gacha 4 ta son kerak.",
+    "DST_NO_MASK": "{device} uchun podtarmoq niqobi berilmagan. Masalan, 255.255.255.0.",
+    "DST_BAD_MASK": "{device} ning niqobi «{mask}» noto'g'ri. Niqobda avval birlar, keyin nollar ketma-ket keladi.",
+    "DST_ADDR_IS_NETWORK": "{device} dagi {ip} manzil tarmoq manzili, uni kompyuterga berib bo'lmaydi.",
+    "DST_ADDR_IS_BROADCAST": "{device} dagi {ip} manzil keng ko'lamli (broadcast), uni kompyuterga berib bo'lmaydi.",
+    "IP_CONFLICT": "Manzillar to'qnashuvi: {source} va {target} da bir xil IP {ip}. Har bir qurilmaning manzili noyob bo'lishi kerak.",
+    "DIFFERENT_SUBNET": "{target} (IP {target_ip}) sizning {source_net} podtarmog'ingizda emas. Router bo'lmasa, bunday qurilmalar bog'lana olmaydi. IP-manzil va niqoblarni tekshiring.",
+    "NO_PATH": "{source} va {target} o'rtasida jismoniy ulanish yo'q. Kabellar kommutatorga ulanganini tekshiring.",
+    "REPLY_DIFFERENT_SUBNET": "So'rov {target} ga yetib bordi, lekin javob qaytmadi: {target_net} niqobi bo'yicha {source_ip} manzil unga begona ko'rinadi. {target} niqobini tekshiring."
+  },
+  "errors": {
+    "NETWORK": "Server bilan aloqa yo'q. U ishga tushirilganmi?",
+    "INTERNAL": "Serverning ichki xatosi.",
+    "TOPOLOGY_INVALID": "Sxema buzilgan yoki noto'g'ri.",
+    "TOPOLOGY_TOO_BIG": "Qurilmalar yoki kabellar juda ko'p.",
+    "BAD_DEVICE": "Sxemada noto'g'ri qurilma bor.",
+    "BAD_LINK": "Sxemada noto'g'ri kabel bor.",
+    "DUPLICATE_ID": "Sxemada takrorlanuvchi identifikator bor.",
+    "UNKNOWN_DEVICE": "Kabel mavjud bo'lmagan qurilmaga olib boradi.",
+    "BAD_PORT": "Bunday port yo'q.",
+    "PORT_BUSY": "Bu port allaqachon kabel bilan band.",
+    "SELF_LINK": "Qurilmani o'zi bilan ulab bo'lmaydi.",
+    "INVALID_NAME": "Loyiha nomi: 1 dan 60 gacha belgi.",
+    "TOO_MANY_PROJECTS": "Loyihalar chegarasiga yetildi. Keraksizlarini o'chiring.",
+    "NOT_FOUND": "Topilmadi.",
+    "BAD_REQUEST": "Noto'g'ri so'rov.",
+    "TOO_LARGE": "So'rov juda katta.",
+    "FORBIDDEN_HOST": "Kirish taqiqlangan.",
+    "UNSUPPORTED_MEDIA_TYPE": "So'rov formati qo'llab-quvvatlanmaydi.",
+    "METHOD_NOT_ALLOWED": "Usul qo'llab-quvvatlanmaydi."
+  },
+  "msg": {
+    "no_free_port": "«{name}» qurilmasida bo'sh port yo'q.",
+    "already_linked": "Bu qurilmalar allaqachon ulangan.",
+    "limit": "Qurilmalar chegarasiga yetildi.",
+    "sandbox_reset": "Yangi sxema yaratildi."
+  },
+  "task_items": {
+    "connect_two_pcs": {
+      "title": "1. Birinchi tarmoq",
+      "desc": "PC1 va PC2 ni SW1 kommutatoriga kabellar bilan ulang. Bir tarmoqdan manzillar bering, masalan 10.0.0.1 va 10.0.0.2, niqob 255.255.255.0. Ikkala yo'nalishda ham ping muvaffaqiyatli bo'lsin."
+    },
+    "no_cable": {
+      "title": "2. Unutilgan kabel",
+      "desc": "Manzillar to'g'ri sozlangan, lekin ping o'tmayapti. Sababini toping va tuzating."
+    },
+    "fix_mask": {
+      "title": "3. G'alati niqob",
+      "desc": "Ping bir tomonga yetadi, lekin javob qaytmaydi. IP-manzillarni o'zgartirmasdan sozlamalarni tuzating."
+    },
+    "fix_conflict": {
+      "title": "4. Manzillar to'qnashuvi",
+      "desc": "Ikki kompyuterda bir xil IP-manzil bor. To'qnashuvni bartaraf eting."
+    },
+    "fix_subnet": {
+      "title": "5. Turli podtarmoqlar",
+      "desc": "Kompyuterlar turli podtarmoqlarda. PC1 o'zgarmasin, PC2 manzilini o'zgartiring."
+    }
+  },
+  "theme": {
+    "title": "Ko'rinish",
+    "toggle": "Mavzuni tanlash",
+    "reset": "Tizimga qaytarish",
+    "cyberpunk": "Cyberpunk",
+    "ocean": "Ocean",
+    "purple": "Purple Haze",
+    "emerald": "Emerald",
+    "crimson": "Crimson",
+    "light": "Light",
+    "active": "tanlangan",
+    "storage_unavailable": "Tanlovni saqlab bo'lmadi; mavzu qayta yuklashgacha amal qiladi"
+  },
+  "footer": {
+    "author": "Loyiha haqida"
+  }
+}

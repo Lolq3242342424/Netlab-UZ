@@ -1,0 +1,303 @@
+"use strict";
+
+(function () {
+    if (window.__netlabThemeInitialized) return;
+    window.__netlabThemeInitialized = true;
+
+    var STORAGE_KEY = 'netlab.theme';
+    var VALID = ['cyberpunk', 'ocean', 'purple', 'emerald', 'crimson', 'light'];
+    var DARK = 'cyberpunk';
+    var LIGHT = 'light';
+
+    // Локальный словарь. app.js обрабатывает [data-i18n] через свою i18n,
+    // но aria-label и title не подпадают под его applyStaticText().
+    // Для этих атрибутов theme.js использует локальный словарь.
+    // Значения совпадают с тем, что будет добавлено в i18n/*.json.
+    var LABELS = {
+        ru: {
+            'theme.title': 'Внешний вид',
+            'theme.toggle': 'Выбрать тему',
+            'theme.reset': 'Сбросить к системе',
+            'theme.cyberpunk': 'Cyberpunk',
+            'theme.ocean': 'Ocean',
+            'theme.purple': 'Purple Haze',
+            'theme.emerald': 'Emerald',
+            'theme.crimson': 'Crimson',
+            'theme.light': 'Light',
+            'theme.active': 'выбрана',
+            'theme.storage_unavailable': 'Не удалось сохранить выбор; тема применится только до перезагрузки'
+        },
+        uz: {
+            'theme.title': "Ko'rinish",
+            'theme.toggle': 'Mavzuni tanlash',
+            'theme.reset': 'Tizimga qaytarish',
+            'theme.cyberpunk': 'Cyberpunk',
+            'theme.ocean': 'Ocean',
+            'theme.purple': 'Purple Haze',
+            'theme.emerald': 'Emerald',
+            'theme.crimson': 'Crimson',
+            'theme.light': 'Light',
+            'theme.active': 'tanlangan',
+            'theme.storage_unavailable': "Tanlovni saqlab bo'lmadi; mavzu qayta yuklashgacha amal qiladi"
+        }
+    };
+
+    function currentLang() {
+        var sel = document.getElementById('lang-select');
+        if (sel && (sel.value === 'ru' || sel.value === 'uz')) return sel.value;
+        var l = document.documentElement.lang;
+        return (l === 'uz' || l === 'ru') ? l : 'ru';
+    }
+    function t(key) {
+        var d = LABELS[currentLang()] || LABELS.ru;
+        return d[key] || key;
+    }
+
+    function safeGet() { try { return localStorage.getItem(STORAGE_KEY); } catch (e) { return null; } }
+    function safeSet(v) { try { localStorage.setItem(STORAGE_KEY, v); return true; } catch (e) { return false; } }
+    function safeRemove() { try { localStorage.removeItem(STORAGE_KEY); return true; } catch (e) { return false; } }
+
+    function systemTheme() {
+        try {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) return LIGHT;
+        } catch (e) {}
+        return DARK;
+    }
+    function resolveTheme(saved) {
+        return (saved && VALID.indexOf(saved) >= 0) ? saved : systemTheme();
+    }
+
+    function cardLabel(id, isActive) {
+        var base = t('theme.' + id);
+        return isActive ? base + ' (' + t('theme.active') + ')' : base;
+    }
+
+    function applyTheme(id) {
+        document.documentElement.setAttribute('data-theme', id);
+        var cards = document.querySelectorAll('#theme-picker .theme-card');
+        for (var i = 0; i < cards.length; i++) {
+            var c = cards[i];
+            var cid = c.getAttribute('data-theme');
+            var isActive = cid === id;
+            c.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+            var lab = cardLabel(cid, isActive);
+            c.setAttribute('aria-label', lab);
+            c.setAttribute('title', lab);
+        }
+    }
+
+    function setStorageWarn(visible) {
+        var w = document.getElementById('theme-storage-warn');
+        if (w) w.hidden = !visible;
+    }
+
+    function buildPicker() {
+        var mount = document.getElementById('theme-mount');
+        if (!mount) return false;
+        if (mount.querySelector('#theme-toggle')) return true;
+
+        var toggle = document.createElement('button');
+        toggle.type = 'button';
+        toggle.id = 'theme-toggle';
+        toggle.setAttribute('aria-haspopup', 'dialog');
+        toggle.setAttribute('aria-expanded', 'false');
+        toggle.setAttribute('aria-label', t('theme.toggle'));
+        toggle.textContent = '\uD83C\uDFA8';
+        mount.appendChild(toggle);
+
+        var panel = document.createElement('div');
+        panel.id = 'theme-picker';
+        panel.setAttribute('role', 'dialog');
+        panel.setAttribute('aria-labelledby', 'theme-picker-title');
+        panel.hidden = true;
+
+        var title = document.createElement('h3');
+        title.id = 'theme-picker-title';
+        title.className = 'theme-title';
+        title.setAttribute('data-i18n', 'theme.title');
+        title.textContent = t('theme.title');
+        panel.appendChild(title);
+
+        var grid = document.createElement('div');
+        grid.className = 'theme-grid';
+        VALID.forEach(function (id) {
+            var card = document.createElement('button');
+            card.type = 'button';
+            card.className = 'theme-card';
+            card.setAttribute('data-theme', id);
+            card.setAttribute('aria-pressed', 'false');
+            var lab = cardLabel(id, false);
+            card.setAttribute('aria-label', lab);
+            card.setAttribute('title', lab);
+
+            var swatches = document.createElement('span');
+            swatches.className = 'theme-swatches';
+            ['sw-bg', 'sw-accent', 'sw-accent2'].forEach(function (cls) {
+                var s = document.createElement('span');
+                s.className = cls;
+                swatches.appendChild(s);
+            });
+            card.appendChild(swatches);
+
+            var label = document.createElement('span');
+            label.className = 'theme-label';
+            label.setAttribute('data-i18n', 'theme.' + id);
+            label.textContent = t('theme.' + id);
+            card.appendChild(label);
+
+            card.addEventListener('click', function () {
+                applyTheme(id);
+                var ok = safeSet(id);
+                setStorageWarn(!ok);
+            });
+            grid.appendChild(card);
+        });
+        panel.appendChild(grid);
+
+        var reset = document.createElement('button');
+        reset.type = 'button';
+        reset.id = 'theme-reset';
+        reset.className = 'btn';
+        reset.setAttribute('data-i18n', 'theme.reset');
+        reset.textContent = t('theme.reset');
+        reset.addEventListener('click', function () {
+            safeRemove();
+            applyTheme(systemTheme());
+            setStorageWarn(false);
+            closePanel(true);
+        });
+        panel.appendChild(reset);
+
+        var warn = document.createElement('p');
+        warn.id = 'theme-storage-warn';
+        warn.hidden = true;
+        warn.setAttribute('data-i18n', 'theme.storage_unavailable');
+        warn.textContent = t('theme.storage_unavailable');
+        panel.appendChild(warn);
+
+        mount.appendChild(panel);
+        return true;
+    }
+
+    function openPanel() {
+        var panel = document.getElementById('theme-picker');
+        var toggle = document.getElementById('theme-toggle');
+        if (!panel || !toggle) return;
+        panel.hidden = false;
+        toggle.setAttribute('aria-expanded', 'true');
+        var first = panel.querySelector('.theme-card');
+        if (first) { try { first.focus(); } catch (e) {} }
+    }
+
+    function closePanel(restoreFocus) {
+        var panel = document.getElementById('theme-picker');
+        var toggle = document.getElementById('theme-toggle');
+        if (!panel || !toggle) return;
+        if (panel.hidden) return;
+        panel.hidden = true;
+        toggle.setAttribute('aria-expanded', 'false');
+        if (restoreFocus) { try { toggle.focus(); } catch (e) {} }
+    }
+
+    function refreshLabels() {
+        var toggle = document.getElementById('theme-toggle');
+        if (toggle) toggle.setAttribute('aria-label', t('theme.toggle'));
+        var titleEl = document.getElementById('theme-picker-title');
+        if (titleEl) titleEl.textContent = t('theme.title');
+        var reset = document.getElementById('theme-reset');
+        if (reset) reset.textContent = t('theme.reset');
+        var warn = document.getElementById('theme-storage-warn');
+        if (warn) warn.textContent = t('theme.storage_unavailable');
+        var current = document.documentElement.getAttribute('data-theme');
+        var cards = document.querySelectorAll('#theme-picker .theme-card');
+        for (var i = 0; i < cards.length; i++) {
+            var c = cards[i];
+            var id = c.getAttribute('data-theme');
+            var isActive = id === current;
+            c.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+            var lab = cardLabel(id, isActive);
+            c.setAttribute('aria-label', lab);
+            c.setAttribute('title', lab);
+            var labelEl = c.querySelector('.theme-label');
+            if (labelEl) labelEl.textContent = t('theme.' + id);
+        }
+    }
+
+    function wireEvents() {
+        var toggle = document.getElementById('theme-toggle');
+        if (toggle) {
+            toggle.addEventListener('click', function (e) {
+                e.stopPropagation();
+                var panel = document.getElementById('theme-picker');
+                if (!panel) return;
+                if (panel.hidden) openPanel(); else closePanel(true);
+            });
+        }
+
+        document.addEventListener('keydown', function (e) {
+            if (e.key !== 'Escape') return;
+            var panel = document.getElementById('theme-picker');
+            if (panel && !panel.hidden) {
+                e.preventDefault();
+                closePanel(true);
+            }
+        });
+
+        document.addEventListener('click', function (e) {
+            var mount = document.getElementById('theme-mount');
+            var panel = document.getElementById('theme-picker');
+            if (!mount || !panel || panel.hidden) return;
+            if (!mount.contains(e.target)) closePanel(false);
+        });
+
+        var panel = document.getElementById('theme-picker');
+        if (panel) {
+            panel.addEventListener('keydown', function (e) {
+                if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+                var cards = Array.prototype.slice.call(panel.querySelectorAll('.theme-card'));
+                var idx = cards.indexOf(document.activeElement);
+                if (idx < 0) return;
+                e.preventDefault();
+                var next = e.key === 'ArrowRight'
+                    ? (idx + 1) % cards.length
+                    : (idx - 1 + cards.length) % cards.length;
+                try { cards[next].focus(); } catch (err) {}
+            });
+        }
+
+        var langSel = document.getElementById('lang-select');
+        if (langSel) {
+            langSel.addEventListener('change', function () {
+                // #lang-select уже содержит новое значение — currentLang() сразу вернёт новое.
+                refreshLabels();
+            });
+        }
+
+        if (window.matchMedia) {
+            try {
+                var mq = window.matchMedia('(prefers-color-scheme: light)');
+                var handler = function () {
+                    if (safeGet() === null) applyTheme(systemTheme());
+                };
+                if (mq.addEventListener) mq.addEventListener('change', handler);
+                else if (mq.addListener) mq.addListener(handler);
+            } catch (e) {}
+        }
+    }
+
+    function init() {
+        // Тема применяется всегда — даже если на странице нет #theme-mount
+        // (например, на author.html). Совпадает с inline-bootstrap из <head>.
+        applyTheme(resolveTheme(safeGet()));
+
+        if (!buildPicker()) return;
+        wireEvents();
+        refreshLabels();
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
+})();
